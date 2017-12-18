@@ -6,7 +6,7 @@ public class Main {
         System.out.println("Hello HttpServer!");
         try {
             HttpServer server = new HttpServer(8008);
-            server.acceptClientSocket();
+            server.start();
         } catch (IOException e) {
             e.printStackTrace();
         }

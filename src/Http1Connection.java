@@ -8,21 +8,24 @@ public class Http1Connection {
     Socket socket;
 
     HttpRequest request;
-    Http1Response response;
+    Response response;
 
     public Http1Connection(Socket socket) throws IOException {
         this.socket = socket;
         request = new HttpRequest(socket.getInputStream());
-        response = new Http1Response();
     }
 
-    public HttpRequest readRequest() {
-        request.decodeRequest();
-        return request;
+    public String getRequestStartLine() {
+        return request.getStartLine();
     }
 
-    public boolean writeResponse() throws IOException {
-        return response.writeResponse(socket.getOutputStream());
+    public boolean writeResponse(Response response) throws IOException {
+        if (response != null) {
+            response.writeResponse(socket.getOutputStream());
+            return true;
+        }
+        return false;
     }
+
 
 }
