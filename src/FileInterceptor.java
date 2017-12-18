@@ -7,7 +7,7 @@ import java.io.File;
 
 
 /**
- * 只支持text/html
+ * 只支持text/html ,text/plain;
  * Created by lijian on 2017/12/15.
  */
 public class FileInterceptor implements Interceptor {
@@ -32,7 +32,12 @@ public class FileInterceptor implements Interceptor {
             Headers headers = new Headers();
             headers.add(HttpHeaderConst.CACHE_CONTROL, "private");
             headers.add(HttpHeaderConst.DATE, TimeUtil.getGMT());
-            headers.add(HttpHeaderConst.CONTENT_TYPE, "text/html; charset=utf8-8");
+            if (file.getAbsolutePath().endsWith(".html") || file.getAbsolutePath().endsWith(".htm")) {
+                headers.add(HttpHeaderConst.CONTENT_TYPE, "text/html; charset=utf8-8");
+            } else {
+                headers.add(HttpHeaderConst.CONTENT_TYPE, "text/plain;");
+            }
+
             return new FileHttpResponse(file, HttpProtocol.HTTP_1_1, Code.HTTP_OK, headers);
         }
         if (file != null && !file.exists()) {
